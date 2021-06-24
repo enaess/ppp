@@ -101,6 +101,10 @@
 #endif
 #include <time.h>
 
+#ifdef HAVE_CRYPT_H
+#include <crypt.h>
+#endif
+
 #ifdef SYSTEMD
 #include <systemd/sd-daemon.h>
 #endif
@@ -266,8 +270,6 @@ bool need_peer_eap = 0;			/* Require peer to authenticate us */
 bool tls_verify_cert = 0;	/* Do not verify server's SSL certificate */
 
 static char *uafname;		/* name of most recent +ua file */
-
-extern char *crypt (const char *, const char *);
 
 /* Prototypes for procedures local to this file. */
 
@@ -1521,8 +1523,10 @@ check_passwd(int unit,
 	    if (secret[0] != 0 && !login_secret) {
 		/* password given in pap-secrets - must match */
 		if (cryptpap || strcmp(passwd, secret) != 0) {
+#ifdef HAVE_CRYPT_H
 		    char *cbuf = crypt(passwd, secret);
 		    if (!cbuf || strcmp(cbuf, secret) != 0)
+#endif
 			ret = UPAP_AUTHNAK;
 		}
 	    }

@@ -72,10 +72,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pwd.h>
+
+#ifdef HAVE_CRYPT_H
 #include <crypt.h>
+#endif
+
 #ifdef HAS_SHADOW
 #include <shadow.h>
 #endif
+
 #include <time.h>
 #include <utmp.h>
 #include <fcntl.h>
@@ -343,8 +348,10 @@ session_start(const int flags, const char *user, const char *passwd, const char 
 	 */
         if (pw->pw_passwd == NULL || strlen(pw->pw_passwd) < 2)
             return SESSION_FAILED;
+#ifdef HAVE_CRYPT_H
 	cbuf = crypt(passwd, pw->pw_passwd);
 	if (!cbuf || strcmp(cbuf, pw->pw_passwd) != 0)
+#endif
             return SESSION_FAILED;
     }
 
