@@ -1,6 +1,7 @@
 /*
  * define path names
  */
+#include <pppdconf.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

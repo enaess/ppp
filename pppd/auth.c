@@ -70,6 +70,10 @@
 
 #define RCSID	"$Id: auth.c,v 1.117 2008/07/01 12:27:56 paulus Exp $"
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -93,7 +97,7 @@
 #include <arpa/inet.h>
 
 
-#ifdef HAS_SHADOW
+#ifdef HAVE_SHADOW_H
 #include <shadow.h>
 #ifndef PW_PPP
 #define PW_PPP PW_LOGIN

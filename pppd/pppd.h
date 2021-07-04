@@ -41,6 +41,7 @@
  *
  * $Id: pppd.h,v 1.96 2008/06/23 11:47:18 paulus Exp $
  */
+#include <pppdconf.h>
 
 /*
  * TODO:

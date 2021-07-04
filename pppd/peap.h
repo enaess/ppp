@@ -5,6 +5,7 @@
  *
  *	Rustam Kovhaev <rkovhaev@gmail.com>
  */
+#include <pppdconf.h>
 
 #ifndef PPP_PEAP_H
 #define	PPP_PEAP_H

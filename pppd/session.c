@@ -68,6 +68,10 @@
  * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -77,7 +81,7 @@
 #include <crypt.h>
 #endif
 
-#ifdef HAS_SHADOW
+#ifdef HAVE_SHADOW_H
 #include <shadow.h>
 #endif
 
@@ -176,11 +180,11 @@ session_start(const int flags, const char *user, const char *passwd, const char 
 #else /* #ifdef USE_PAM */
     struct passwd *pw;
     char *cbuf;
-#ifdef HAS_SHADOW
+#ifdef HAVE_SHADOW_H
     struct spwd *spwd;
     struct spwd *getspnam();
     long now = 0;
-#endif /* #ifdef HAS_SHADOW */
+#endif /* #ifdef HAVE_SHADOW_H */
 #endif /* #ifdef USE_PAM */
 
     SET_MSG(msg, SUCCESS_MSG);
@@ -310,7 +314,7 @@ session_start(const int flags, const char *user, const char *passwd, const char 
 	if (pw == NULL)
 	    return SESSION_FAILED;
 
-#ifdef HAS_SHADOW
+#ifdef HAVE_SHADOW_H
 
 	spwd = getspnam(user);
 	endspent();
@@ -341,7 +345,7 @@ session_start(const int flags, const char *user, const char *passwd, const char 
 	/* We have a valid shadow entry, keep the password */
 	pw->pw_passwd = spwd->sp_pwdp;
 
-#endif /* #ifdef HAS_SHADOW */
+#endif /* #ifdef HAVE_SHADOW_H */
 
 	/*
 	 * If no passwd, don't let them login if we're authenticating.

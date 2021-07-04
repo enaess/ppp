@@ -69,6 +69,10 @@
  * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -85,7 +89,9 @@
 #include <string.h>
 #include <time.h>
 #include <memory.h>
+#ifdef HAVE_UTMP_H
 #include <utmp.h>
+#endif
 #include <mntent.h>
 #include <signal.h>
 #include <fcntl.h>
@@ -2530,7 +2536,7 @@ int ppp_available(void)
     return ok;
 }
 
-#ifndef HAVE_LOGWTMP
+#ifndef HAVE_UTMP_H
 /********************************************************************
  *
  * Update the wtmp file with the appropriate user name and tty device.
@@ -2604,7 +2610,7 @@ void logwtmp (const char *line, const char *name, const char *host)
     }
 #endif
 }
-#endif /* HAVE_LOGWTMP */
+#endif /* HAVE_UTMP_H */
 
 /********************************************************************
  *

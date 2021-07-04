@@ -23,6 +23,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +42,15 @@
 #include "chap_ms.h"
 #include "mppe.h"
 #include "peap.h"
+
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+/*
+ *  OpenSSL 1.1+ introduced a generic TLS_method()
+ *  For older releases we substitute the appropriate method
+ */
+#define TLS_method SSLv23_method
+#endif
+
 
 struct peap_state {
 	SSL_CTX *ctx;
