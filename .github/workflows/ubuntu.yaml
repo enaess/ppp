@@ -1,0 +1,24 @@
+name: Build and test
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install required packages
+      run: sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install build-essential autoconf automake pkg-config libtool m4 autoconf-archive libssl-dev libatm1-dev  libpcap-dev
+
+    - name: configure
+      run: ./autogen.sh
+
+    - name: build
+      run: make V=1 CFLAGS=-Wno-unused-result
+
+    - name: check
+      run: make check
+
+    - name: distcheck
+      run: maek distcheck
