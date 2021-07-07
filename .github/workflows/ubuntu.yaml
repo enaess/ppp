@@ -21,4 +21,4 @@ jobs:
       run: make check
 
     - name: distcheck
-      run: maek distcheck
+      run: make distcheck
