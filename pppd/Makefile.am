@@ -66,7 +66,7 @@ if SUNOS
 pppd_SOURCES += sys-solaris.c
 endif
 
-pppd_CFLAGS = -I${top_srcdir}/include
+pppd_CFLAGS = -I${top_srcdir}/include -DPPPD_RUNTIME_DIR='"@PPPD_RUNTIME_DIR@"' -DPPPD_LOGFILE_DIR='"@PPPD_LOGFILE_DIR@"'
 pppd_LDFLAGS =
 pppd_LIBS = @CRYPT_LIBS@ @UTIL_LIBS@
 
@@ -92,7 +92,7 @@ pppd_LIBS += -lpcap
 endif
 
 if WITH_PLUGINS
-pppd_CFLAGS += -D_PATH_PLUGIN=@PPPD_PLUGIN_DIR@
+pppd_CFLAGS += -DPPPD_PLUGIN_DIR='"@PPPD_PLUGIN_DIR@"'
 pppd_LIBS += -ldl
 if LINUX
 pppd_LDFLAGS += -Wl,-E

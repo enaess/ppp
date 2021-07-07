@@ -188,6 +188,16 @@ AM_CONDITIONAL(WITH_TDB, test "${enable_multilink}" != "no")
 # Disable support for activating pppd on packet activity (filter support)
 AC_ARG_ENABLE([filter],
     AS_HELP_STRING([--disable-filter], [Disable packet activity filter support]))
+AS_IF([test "x$enable_filter" != "xno"],
+    [AC_MSG_CHECKING([for pcap_create in -lpcap])
+     LIBS_OLD="$LIBS"
+     LIBS="$LIBS -lpcap"
+     AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM([@%:@include <pcap.h>], [pcap_create(0,0);])],
+        [AC_MSG_RESULT([yes])],
+        [AC_MSG_ERROR([--enable-filter is enabled by default, but libpcap is isn't found])])
+     LIBS="$LIBS_OLD"
+     ])
 AS_IF([test "x$enable_filter" != "xno"], 
     AC_DEFINE([FILTER], 1, ["Have packet activity filter support"]))
 AM_CONDITIONAL(WITH_FILTER, test "${enable_filter}" != "no")
@@ -196,6 +206,8 @@ AM_CONDITIONAL(WITH_FILTER, test "${enable_filter}" != "no")
 # Enable support for loadable plugins
 AC_ARG_ENABLE([plugins],
     AS_HELP_STRING([--disable-plugins], [Disable support for loadable plugins]))
+AS_IF([test "x$enable_plugins" != "xno"],
+    AC_DEFINE([PLUGINS], 1, ["Have support for loadable plugins"]))
 AM_CONDITIONAL(WITH_PLUGINS, test "${enable_plugins}" != "no")
 
 #
@@ -225,7 +237,7 @@ AS_IF([test "x$enable_openssl_engine" != "xno"], [],
 # Specify runtime directory
 AC_ARG_ENABLE([plugin-dir], 
 	AC_HELP_STRING([--with-plugin-dir=DIR], [Specify the plugin directory for pppd]))
-AS_IF([ test -n "$with_plugin_dir"],
+AS_IF([test -n "$with_plugin_dir"],
 	[PPPD_PLUGIN_DIR="$with_plugin_dir"],
 	[PPPD_PLUGIN_DIR="${libdir}/pppd/$VERSION"])
 AC_SUBST(PPPD_PLUGIN_DIR, "$PPPD_PLUGIN_DIR", [The pppd plugin directory])
@@ -234,10 +246,19 @@ AC_SUBST(PPPD_PLUGIN_DIR, "$PPPD_PLUGIN_DIR", [The pppd plugin directory])
 # Specify runtime directory
 AC_ARG_ENABLE([runtime-dir], 
 	AC_HELP_STRING([--with-runtime-dir=DIR], [Specify the runtime directory for pppd]))
-AS_IF([ test -n "$with_runtime_dir"],
+AS_IF([test -n "$with_runtime_dir"],
 	[PPPD_RUNTIME_DIR="$with_runtime_dir"],
 	[PPPD_RUNTIME_DIR="${localstatedir}/run/pppd"])
 AC_SUBST(PPPD_RUNTIME_DIR)
+
+#
+# Specify runtime directory
+AC_ARG_ENABLE([logfile-dir],
+	AC_HELP_STRING([--with-logfile-dir=DIR], [Specify the log directory for pppd]))
+AS_IF([test -n "$with_logfile_dir"],
+	[PPPD_LOGFILE_DIR="$with_logfile_dir"],
+	[PPPD_LOGFILE_DIR="${localstatedir}/log/pppd"])
+AC_SUBST(PPPD_LOGFILE_DIR)
 
 #
 # Enable PAM support
@@ -315,6 +336,7 @@ echo "
 $PACKAGE_NAME version $PACKAGE_VERSION
     Prefix...............: $prefix
     Runtime Dir..........: $PPPD_RUNTIME_DIR
+    Logfile Dir..........: $PPPD_LOGFILE_DIR
     Plugin Dir...........: $PPPD_PLUGIN_DIR
     With OpenSSL.........: ${with_openssl:-yes}
     With libsrp..........: ${with_srp:-no}
