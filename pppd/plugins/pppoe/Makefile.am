@@ -10,7 +10,7 @@ pppoe_la_CFLAGS = -I${top_srcdir} -I${top_srcdir}/include
 pppoe_la_LDFLAGS = -module -avoid-version
 pppoe_la_SOURCES = plugin.c discovery.c if.c common.c
 
-pppoe_discovery_CFLAGS = -I${top_srcdir}/include
+pppoe_discovery_CFLAGS = -I${top_srcdir} -I${top_srcdir}/include
 pppoe_discovery_SOURCES = pppoe-discovery.c debug.c
 
 EXTRA_DIST = \
