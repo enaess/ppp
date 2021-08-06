@@ -54,7 +54,7 @@
 #include <syslog.h>
 #include <string.h>
 #include <pwd.h>
-#ifdef PLUGIN
+#ifdef PPP_WITH_PLUGINS
 #include <dlfcn.h>
 #endif
 
@@ -166,7 +166,7 @@ static int showversion(char **);
 static int showhelp(char **);
 static void usage(void);
 static int setlogfile(char **);
-#ifdef PLUGIN
+#ifdef PPP_WITH_PLUGINS
 static int loadplugin(char **);
 #endif
 
@@ -342,7 +342,7 @@ option_t general_options[] = {
       "Bundle name for multilink", OPT_PRIO },
 #endif /* PPP_WITH_MULTILINK */
 
-#ifdef PLUGIN
+#ifdef PPP_WITH_PLUGINS
     { "plugin", o_special, (void *)loadplugin,
       "Load a plug-in module into pppd", OPT_PRIV | OPT_A2LIST },
 #endif
@@ -1572,7 +1572,7 @@ setmodir(char **argv)
 }
 #endif
 
-#ifdef PLUGIN
+#ifdef PPP_WITH_PLUGINS
 static int
 loadplugin(char **argv)
 {
@@ -1625,7 +1625,7 @@ loadplugin(char **argv)
 	free(path);
     return 0;
 }
-#endif /* PLUGIN */
+#endif /* PPP_WITH_PLUGINS */
 
 /*
  * Set an environment variable specified by the user.
