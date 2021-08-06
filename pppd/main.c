@@ -111,7 +111,7 @@
 #include "tdb.h"
 #endif
 
-#ifdef CBCP_SUPPORT
+#ifdef PPP_WITH_CBCP
 #include "cbcp.h"
 #endif
 
@@ -269,7 +269,7 @@ struct protent *protocols[] = {
     &lcp_protent,
     &pap_protent,
     &chap_protent,
-#ifdef CBCP_SUPPORT
+#ifdef PPP_WITH_CBCP
     &cbcp_protent,
 #endif
     &ipcp_protent,
