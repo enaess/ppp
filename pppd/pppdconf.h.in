@@ -13,7 +13,7 @@
 #undef HAVE_MULTILINK
 
 /* "Have IPX Control Protocol" */
-#undef IPX_CHANGE
+#undef PPP_WITH_IPXCP
 
 /* "Have packet activity filter support" */
 #undef PPP_FILTER

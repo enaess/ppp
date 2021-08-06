@@ -715,7 +715,7 @@ int  have_route_to(u_int32_t); /* Check if route to addr exists */
 int  set_filters(struct bpf_program *pass, struct bpf_program *active);
 				/* Set filter programs in kernel */
 #endif
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
 int  sipxfaddr(int, unsigned long, unsigned char *);
 int  cipxfaddr(int);
 #endif

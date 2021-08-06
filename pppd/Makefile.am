@@ -94,7 +94,7 @@ if WITH_CBCP
 pppd_SOURCES += cbcp.c
 endif
 
-if WITH_IPXCP
+if PPP_WITH_IPXCP
 pppd_SOURCES += ipxcp.c
 endif
 

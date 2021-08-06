@@ -118,9 +118,9 @@ AM_COND_IF([WITH_CBCP],
 # Disable support for IPX control protocol
 AC_ARG_ENABLE([ipxcp],
     AS_HELP_STRING([--enable-ipxcp], [Enable IPX Control Protocol support]))
-AM_CONDITIONAL(WITH_IPXCP, test "x${enable_ipxcp}" = "xyes")
-AM_COND_IF(WITH_IPXCP,
-    AC_DEFINE([IPX_CHANGE], 1, ["Have IPX Control Protocol"]))
+AM_CONDITIONAL(PPP_WITH_IPXCP, test "x${enable_ipxcp}" = "xyes")
+AM_COND_IF(PPP_WITH_IPXCP,
+    AC_DEFINE([PPP_WITH_IPXCP], 1, ["Have IPX Control Protocol"]))
 AS_IF([test "x${build_sunos}" = "xyes" && test "x${enable_ipxcp}" = "xyes"],
     [AC_MSG_ERROR([IPXCP is not supported on SunOS, disable using --disable-ipxcp])])
 

@@ -146,7 +146,7 @@
 #include "fsm.h"
 #include "ipcp.h"
 
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
 #include "ipxcp.h"
 #if __GLIBC__ >= 2 && \
     !(defined(__powerpc__) && __GLIBC__ == 2 && __GLIBC_MINOR__ == 0)
@@ -154,7 +154,7 @@
 #else
 #include <linux/ipx.h>
 #endif
-#endif /* IPX_CHANGE */
+#endif /* PPP_WITH_IPXCP*/
 
 #ifdef PPP_FILTER
 #include <pcap-bpf.h>
@@ -3293,7 +3293,7 @@ int sipxfaddr (int unit, unsigned long int network, unsigned char * node )
 {
     int    result = 1;
 
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
     int    skfd;
     struct ifreq         ifr;
     struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) &ifr.ifr_addr;
@@ -3344,7 +3344,7 @@ int cipxfaddr (int unit)
 {
     int    result = 1;
 
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
     int    skfd;
     struct ifreq         ifr;
     struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) &ifr.ifr_addr;
@@ -3399,7 +3399,7 @@ get_host_seed(void)
 int
 sys_check_options(void)
 {
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
 /*
  * Disable the IPX protocol if the support is not present in the kernel.
  */

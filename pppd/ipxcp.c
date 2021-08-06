@@ -44,12 +44,6 @@
 #include "config.h"
 #endif
 
-#ifdef IPX_CHANGE
-
-/*
- * TODO:
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -1547,4 +1541,3 @@ ipxcp_printpkt(u_char *p, int plen,
 
     return p - pstart;
 }
-#endif /* ifdef IPX_CHANGE */

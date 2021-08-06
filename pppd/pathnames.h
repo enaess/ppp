@@ -64,10 +64,10 @@
 #define _PATH_IPV6DOWN   _ROOT_PATH "/etc/ppp/ipv6-down"
 #endif
 
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
 #define _PATH_IPXUP	 _ROOT_PATH "/etc/ppp/ipx-up"
 #define _PATH_IPXDOWN	 _ROOT_PATH "/etc/ppp/ipx-down"
-#endif /* IPX_CHANGE */
+#endif /* PPP_WITH_IPXCP */
 
 #ifdef __STDC__
 #define _PATH_PPPDB	_ROOT_PATH _PATH_VARRUN "pppd2.tdb"

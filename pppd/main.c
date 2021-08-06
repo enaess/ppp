@@ -115,9 +115,9 @@
 #include "cbcp.h"
 #endif
 
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
 #include "ipxcp.h"
-#endif /* IPX_CHANGE */
+#endif /* PPP_WITH_IPXCP */
 #ifdef AT_CHANGE
 #include "atcp.h"
 #endif
@@ -278,7 +278,7 @@ struct protent *protocols[] = {
 #endif
     &ccp_protent,
     &ecp_protent,
-#ifdef IPX_CHANGE
+#ifdef PPP_WITH_IPXCP
     &ipxcp_protent,
 #endif
 #ifdef AT_CHANGE
