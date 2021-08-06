@@ -97,7 +97,7 @@
 #include "fsm.h"
 #include "lcp.h"
 #include "ipcp.h"
-#ifdef INET6
+#ifdef WITH_PPP_IPV6CP
 #include "ipv6cp.h"
 #endif
 #include "upap.h"
@@ -273,7 +273,7 @@ struct protent *protocols[] = {
     &cbcp_protent,
 #endif
     &ipcp_protent,
-#ifdef INET6
+#ifdef WITH_PPP_IPV6CP
     &ipv6cp_protent,
 #endif
     &ccp_protent,
