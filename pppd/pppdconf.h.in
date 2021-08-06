@@ -19,7 +19,7 @@
 #undef PPP_WITH_IPXCP
 
 /* "Have packet activity filter support" */
-#undef PPP_FILTER
+#undef PPP_WITH_FILTER
 
 /* "Have support for loadable plugins" */
 #undef PPP_WITH_PLUGINS

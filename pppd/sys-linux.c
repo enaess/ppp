@@ -156,10 +156,10 @@
 #endif
 #endif /* PPP_WITH_IPXCP*/
 
-#ifdef PPP_FILTER
+#ifdef PPP_WITH_FILTER
 #include <pcap-bpf.h>
 #include <linux/filter.h>
-#endif /* PPP_FILTER */
+#endif /* PPP_WITH_FILTER */
 
 #ifdef LOCKLIB
 #include <sys/locks.h>
@@ -1426,7 +1426,7 @@ void ccp_flags_set (int unit, int isopen, int isup)
 		modify_flags(ppp_dev_fd, SC_CCP_OPEN|SC_CCP_UP, x);
 }
 
-#ifdef PPP_FILTER
+#ifdef PPP_WITH_FILTER
 /*
  * set_filters - set the active and pass filters in the kernel driver.
  */
@@ -1451,7 +1451,7 @@ int set_filters(struct bpf_program *pass, struct bpf_program *active)
 	}
 	return 1;
 }
-#endif /* PPP_FILTER */
+#endif /* PPP_WITH_FILTER */
 
 /********************************************************************
  *
