@@ -116,7 +116,7 @@ pppd_LDFLAGS += -Wl,-E
 endif
 endif
 
-if WITH_MULTILINK
+if PPP_WITH_MULTILINK
 pppd_SOURCES += multilink.c
 endif
 
