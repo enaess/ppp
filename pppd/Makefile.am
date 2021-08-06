@@ -81,7 +81,7 @@ pppd_SOURCES += sys-solaris.c
 pppd_LIBS += -lsocket -lnsl
 endif
 
-if WITH_CHAPMS
+if PPP_WITH_CHAPMS
 pppd_SOURCES += chap_ms.c
 pppd_SOURCES += pppcrypt.c
 else
@@ -98,7 +98,7 @@ if PPP_WITH_IPXCP
 pppd_SOURCES += ipxcp.c
 endif
 
-if WITH_MPPE
+if PPP_WITH_MPPE
 pppd_SOURCES += mppe.c
 endif
 

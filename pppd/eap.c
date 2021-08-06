@@ -86,12 +86,12 @@
 #include "eap-tls.h"
 #endif /* USE_EAPTLS */
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 #include "chap_ms.h"
 #include "chap-new.h"
 
 extern int chapms_strip_domain;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 eap_state eap_states[NUM_PPP];		/* EAP state; one for each unit */
 #ifdef USE_SRP
@@ -227,7 +227,7 @@ eap_init(int unit)
 #ifdef USE_EAPTLS
 	esp->es_client.ea_using_eaptls = 0;
 #endif /* USE_EAPTLS */
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	esp->es_client.digest = chap_find_digest(CHAP_MICROSOFT_V2);
 	esp->es_server.digest = chap_find_digest(CHAP_MICROSOFT_V2);
 #endif
@@ -701,7 +701,7 @@ eap_figure_next_state(eap_state *esp, int status)
 		}
 		break;
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	case eapMSCHAPv2Chall:
 #endif
 	case eapMD5Chall:
@@ -724,7 +724,7 @@ eap_figure_next_state(eap_state *esp, int status)
 #endif /* USE_EAPTLS */
 }
 
-#if CHAPMS
+#if PPP_WITH_CHAPMS
 /*
  * eap_chap_verify_response - check whether the peer's response matches
  * what we think it should be.  Returns 1 if it does (authentication
@@ -792,7 +792,7 @@ eap_chapms2_send_request(eap_state *esp, u_char id,
 		auth_peer_fail(esp->es_unit, PPP_EAP);
 	}
 }
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 /*
  * Format an EAP Request message and send it to the peer.  Message
@@ -879,7 +879,7 @@ eap_send_request(eap_state *esp)
 		INCPTR(esp->es_server.ea_namelen, outp);
 		break;
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	case eapMSCHAPv2Chall:
 		esp->es_server.digest->generate_challenge(esp->es_challenge);
 		challen = esp->es_challenge[0];
@@ -900,7 +900,7 @@ eap_send_request(eap_state *esp)
 				esp->es_server.ea_namelen);
 		INCPTR(esp->es_server.ea_namelen, outp);
 		break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 #ifdef USE_EAPTLS
 	case eapTlsStart:
@@ -1595,7 +1595,7 @@ write_pseudonym(eap_state *esp, u_char *inp, int len, int id)
 }
 #endif /* USE_SRP */
 
-#if CHAPMS
+#if PPP_WITH_CHAPMS
 /*
  * Format and send an CHAPV2-Challenge EAP Response message.
  */
@@ -1856,7 +1856,7 @@ eap_request(eap_state *esp, u_char *inp, int id, int len)
 
 			/* Check if TLS handshake is finished */
 			if(eaptls_is_init_finished(ets)) {
-#ifdef MPPE
+#ifdef PPP_WITH_MPPE
 				eaptls_gen_mppe_keys(ets, 1);
 #endif
 				eaptls_free_session(ets);
@@ -2110,7 +2110,7 @@ eap_request(eap_state *esp, u_char *inp, int id, int len)
 		break;
 #endif /* USE_SRP */
     
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
         case EAPT_MSCHAPV2:
 	    if (len < 4) {
 		error("EAP: received invalid MSCHAPv2 packet, too short");
@@ -2215,7 +2215,7 @@ eap_request(eap_state *esp, u_char *inp, int id, int len)
 	    }
 
 	    break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 	default:
 		info("EAP: unknown authentication type %d; Naking", typenum);
@@ -2266,12 +2266,12 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 	struct eaptls_session *ets;
 	u_char flags;
 #endif /* USE_EAPTLS */
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	u_char opcode;
 	int (*chap_verifier)(char *, char *, int, struct chap_digest_type *,
 		unsigned char *, unsigned char *, char *, int);
 	char response_message[256];
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 	/*
 	 * Ignore responses if we're not open
@@ -2348,7 +2348,7 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 				GETCHAR(flags, inp);
 
 				if(len == 1 && !flags) {	/* Ack = ok */
-#ifdef MPPE
+#ifdef PPP_WITH_MPPE
 					eaptls_gen_mppe_keys( esp->es_server.ea_session, 0 );
 #endif
 					eap_send_success(esp);
@@ -2414,7 +2414,7 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 			break;
 #endif /* USE_EAPTLS */
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 		case EAPT_MSCHAPV2:
 			info("EAP: peer proposes MSCHAPv2");
 			/* If MSCHAPv2 digest was not found, NAK the packet */
@@ -2425,7 +2425,7 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 			}
 			esp->es_server.ea_state = eapMSCHAPv2Chall;
 			break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 		default:
 			dbglog("EAP: peer requesting unknown Type %d", vallen);
@@ -2508,7 +2508,7 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 			TIMEOUT(eap_rechallenge, esp, esp->es_rechallenge);
 		break;
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	case EAPT_MSCHAPV2:
 		if (len < 1) {
 			error("EAP: received MSCHAPv2 with no data");
@@ -2611,7 +2611,7 @@ eap_response(eap_state *esp, u_char *inp, int id, int len)
 		}
 
 		break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 #ifdef USE_SRP
 	case EAPT_SRP:
@@ -2886,9 +2886,9 @@ eap_printpkt(u_char *inp, int inlen,
 #ifdef USE_EAPTLS
 	u_char flags;
 #endif /* USE_EAPTLS */
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 	u_char opcode;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 	if (inlen < EAP_HEADERLEN)
 		return (0);
@@ -2953,7 +2953,7 @@ eap_printpkt(u_char *inp, int inlen,
 			}
 			break;
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 		case EAPT_MSCHAPV2:
 			if (len <= 0)
 				break;
@@ -3006,7 +3006,7 @@ eap_printpkt(u_char *inp, int inlen,
 				break;
 			}
 			break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 #ifdef USE_EAPTLS
 		case EAPT_TLS:
@@ -3195,7 +3195,7 @@ eap_printpkt(u_char *inp, int inlen,
 			}
 			break;
 
-#ifdef CHAPMS
+#ifdef PPP_WITH_CHAPMS
 		case EAPT_MSCHAPV2:
 			if (len <= 0)
 				break;
@@ -3238,7 +3238,7 @@ eap_printpkt(u_char *inp, int inlen,
 				break;
 			}
 			break;
-#endif /* CHAPMS */
+#endif /* PPP_WITH_CHAPMS */
 
 #ifdef USE_SRP
 		case EAPT_SRP:

@@ -124,7 +124,7 @@ static inline int SSL_CTX_set_max_proto_version(SSL_CTX *ctx, long tls_ver_max)
 
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
 
-#ifdef MPPE
+#ifdef PPP_WITH_MPPE
 #define EAPTLS_MPPE_KEY_LEN     32
 
 /*
@@ -176,7 +176,7 @@ void eaptls_gen_mppe_keys(struct eaptls_session *ets, int client)
     }
 }
 
-#endif /* MPPE */
+#endif /* PPP_WITH_MPPE */
 
 
 void log_ssl_errors( void )
