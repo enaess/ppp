@@ -88,7 +88,7 @@ AC_CHECK_FUNCS([    \
 # If libc doesn't provide logwtmp, check if libutil provides logwtmp(), and if so link to it.
 AS_IF([test "x${ac_cv_func_logwtmp}" != "xyes"], [
     AC_CHECK_LIB([util], [logwtmp], [
-        AC_DEFINE(HAVE_LOGWTMP, 1, ["System provides the logwtmp() function"])
+        AC_DEFINE(HAVE_LOGWTMP, 1, [System provides the logwtmp() function])
         AC_SUBST([UTIL_LIBS], ["-lutil"])
     ])
 ])
@@ -120,7 +120,7 @@ AC_ARG_ENABLE([ipxcp],
     AS_HELP_STRING([--enable-ipxcp], [Enable IPX Control Protocol support]))
 AM_CONDITIONAL(PPP_WITH_IPXCP, test "x${enable_ipxcp}" = "xyes")
 AM_COND_IF(PPP_WITH_IPXCP,
-    AC_DEFINE([PPP_WITH_IPXCP], 1, ["Have IPX Control Protocol"]))
+    AC_DEFINE([PPP_WITH_IPXCP], 1, [Have IPX Control Protocol]))
 AS_IF([test "x${build_sunos}" = "xyes" && test "x${enable_ipxcp}" = "xyes"],
     [AC_MSG_ERROR([IPXCP is not supported on SunOS, disable using --disable-ipxcp])])
 
@@ -129,7 +129,7 @@ AS_IF([test "x${build_sunos}" = "xyes" && test "x${enable_ipxcp}" = "xyes"],
 AC_ARG_ENABLE([maxoctets],
     AS_HELP_STRING([--disable-maxoctets], [Disable support for limiting session by maximum octets]))
 AS_IF([test "x$enable_maxoctets" != "xno"],
-    AC_DEFINE([MAXOCTETS], 1, ["Limit sessions by maximum number of octets"]))
+    AC_DEFINE([MAXOCTETS], 1, [Limit sessions by maximum number of octets]))
 
 #
 # Disable Microsoft extensions will remove CHAP and MPPE support
@@ -138,18 +138,18 @@ AC_ARG_ENABLE([microsoft-extensions],
 
 AM_CONDITIONAL(PPP_WITH_CHAPMS, test "x${enable_microsoft_extensions}" != "xno")
 AM_COND_IF([PPP_WITH_CHAPMS],
-    AC_DEFINE([PPP_WITH_CHAPMS], 1, ["Have Microsoft CHAP support"]))
+    AC_DEFINE([PPP_WITH_CHAPMS], 1, [Have Microsoft CHAP support]))
 
 AM_CONDITIONAL(PPP_WITH_MPPE, test "x${enable_microsoft_extensions}" != "xno")
 AM_COND_IF([PPP_WITH_MPPE],
-    AC_DEFINE([PPP_WITH_MPPE], 1, ["Have Microsoft MPPE support"]))
+    AC_DEFINE([PPP_WITH_MPPE], 1, [Have Microsoft MPPE support]))
 
 #
 # Enable Microsoft LAN Manager support, depends on Microsoft Extensions
 AC_ARG_ENABLE([mslanman],
     AS_HELP_STRING([--enable-mslanman], [Enable Microsoft LAN Manager support]))
 AS_IF([test "x${enable_mslanman}" = "xyes" && test "x${enable_microsoft_extensions}" != "xno"],
-    AC_DEFINE([PPP_WITH_MSLANMAN], 1, ["Have Microsoft LAN Manager support"]))
+    AC_DEFINE([PPP_WITH_MSLANMAN], 1, [Have Microsoft LAN Manager support]))
 
 #
 # Disable IPv6 support
@@ -157,7 +157,7 @@ AC_ARG_ENABLE([ipv6cp],
     AS_HELP_STRING([--disable-ipv6cp], [Disable IPv6 Control Protocol]))
 AM_CONDITIONAL(PPP_WITH_IPV6CP, test "x${enable_ipv6cp}" != "xno")
 AM_COND_IF([PPP_WITH_IPV6CP],
-    AC_DEFINE(PPP_WITH_IPV6CP, 1, ["Have IPv6 Control Protocol"]))
+    AC_DEFINE(PPP_WITH_IPV6CP, 1, [Have IPv6 Control Protocol]))
 
 #
 # Disable Multilink support
@@ -165,7 +165,7 @@ AC_ARG_ENABLE([multilink],
     AS_HELP_STRING([--enable-multilink], [Enable multilink support]))
 AM_CONDITIONAL(PPP_WITH_MULTILINK, test "x${enable_multilink}" = "xyes")
 AM_COND_IF([PPP_WITH_MULTILINK],
-    AC_DEFINE([PPP_WITH_MULTILINK], 1, ["Have multilink support"]))
+    AC_DEFINE([PPP_WITH_MULTILINK], 1, [Have multilink support]))
 AS_IF([test "x${build_sunos}" = "xyes" && test "x${enable_multilink}" = "xyes"],
     [AC_MSG_ERROR([Multilink is not supported on SunOS])])
 
@@ -173,14 +173,14 @@ AS_IF([test "x${build_sunos}" = "xyes" && test "x${enable_multilink}" = "xyes"],
 # Multilink require Trivial Database Support
 AM_CONDITIONAL(PPP_WITH_TDB, test "x${enable_multilink}" = "xyes")
 AM_COND_IF([PPP_WITH_TDB],
-    AC_DEFINE([PPP_WITH_TDB], 1, ["Include TDB support"]))
+    AC_DEFINE([PPP_WITH_TDB], 1, [Include TDB support]))
 
 #
 # Enable support for loadable plugins
 AC_ARG_ENABLE([plugins],
     AS_HELP_STRING([--disable-plugins], [Disable support for loadable plugins]))
 AS_IF([test "x$enable_plugins" != "xno"],
-    AC_DEFINE([PPP_WITH_PLUGINS], 1, ["Have support for loadable plugins"]))
+    AC_DEFINE([PPP_WITH_PLUGINS], 1, [Have support for loadable plugins]))
 AM_CONDITIONAL(PPP_WITH_PLUGINS, test "${enable_plugins}" != "no")
 
 #
@@ -188,7 +188,7 @@ AM_CONDITIONAL(PPP_WITH_PLUGINS, test "${enable_plugins}" != "no")
 AC_ARG_ENABLE([eaptls],
     AS_HELP_STRING([--disable-eaptls], [Disable EAP-TLS authentication support]))
 AS_IF([test "x$enable_eaptls" != "xno"],
-    AC_DEFINE([USE_EAPTLS], 1, ["Have EAP-TLS authentication support"]))
+    AC_DEFINE([USE_EAPTLS], 1, [Have EAP-TLS authentication support]))
 AM_CONDITIONAL(WITH_EAPTLS, test "${enable_eaptls}" != "no")
 
 #
@@ -196,7 +196,7 @@ AM_CONDITIONAL(WITH_EAPTLS, test "${enable_eaptls}" != "no")
 AC_ARG_ENABLE([openssl-engine],
     AS_HELP_STRING([--disable-openssl-engine], [Disable OpenSSL engine support]))
 AS_IF([test "x$enable_openssl_engine" != "xno"], [],
-    AC_DEFINE([OPENSSL_NO_ENGINE], 1, ["OpenSSL engine support"]))
+    AC_DEFINE([OPENSSL_NO_ENGINE], 1, [OpenSSL engine support]))
 
 #
 # Specify runtime directory
@@ -277,7 +277,7 @@ AX_CHECK_ATM
 
 #
 # With libpam support
-AX_CHECK_PAM(AC_DEFINE([USE_PAM], 1, ["Support for Pluggable Authentication Modules"]))
+AX_CHECK_PAM(AC_DEFINE([USE_PAM], 1, [Support for Pluggable Authentication Modules]))
 AM_CONDITIONAL(WITH_PAM, test "x${with_pam}" = "xyes")
 
 #
@@ -288,7 +288,7 @@ AX_CHECK_PCAP
 # SunOS provides a version of libpcap that would work, but SunOS has no support for activity filter
 AM_CONDITIONAL([PPP_WITH_FILTER], [ test "x${with_pcap}" = "xyes" && test "x${build_sunos}" != "xyes" ])
 AM_COND_IF([PPP_WITH_FILTER], [
-    AC_DEFINE([PPP_WITH_FILTER], 1, ["Have packet activity filter support"])], [
+    AC_DEFINE([PPP_WITH_FILTER], 1, [Have packet activity filter support])], [
     AS_IF([test "x${build_sunos}" = "xyes"], [
         AC_MSG_WARN([Packet activity filter not supported on SunOS])
         with_pcap="no"
